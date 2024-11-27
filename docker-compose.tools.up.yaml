@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  portainer:
+    image: portainer/portainer-ce:latest
+    container_name: portainer
+    restart: always
+    ports:
+      - "9000:9000"  # Portainer Web UI
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock  # Docker socket for managing containers
+      - portainer_data:/data  # Persistent data storage
+    networks:
+      - my-services
+
+volumes:
+  portainer_data:
+    driver: local
+networks:
+  my-services:
+    external: true
