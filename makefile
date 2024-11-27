@@ -13,7 +13,7 @@ tools:
 
 hub:
 	@docker-compose -f docker-compose-hub.yaml down
-	@docker-compose -f docker-compose-hub.yaml up -d
+	@docker-compose -f docker-compose-hub.yaml up -d --build
 
 openstack:
 	@docker-compose -f docker-compose-openstack.yaml down

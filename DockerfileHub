@@ -1,0 +1,8 @@
+FROM htdocs_whmcs
+
+RUN mkdir -p /home/script
+
+COPY ./bash/hubScript.sh /home/script/hubScript.sh
+
+RUN chmod +x /home/script/hubScript.sh
+

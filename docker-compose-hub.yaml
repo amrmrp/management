@@ -2,21 +2,27 @@ version: '3.8'
 
 services:
   whmcs:
+    build:
+      context: .
+      dockerfile: DockerfileHub
+    command: [ "/bin/bash", "/home/script/hubScript.sh" ]
     container_name: whmcs-website
-    image: htdocs_whmcs
     env_file:
       - ./env/.env.hub.local
     restart: unless-stopped
     volumes:
       - '/home/amir/htdocs:/var/www/html'
       - '/home/amir/htdocs/metrics/logs:/var/www/html/metrics/logs:rw'
-      - 'management_logs_volume_hub:/hub/logs:rw'
+      - 'management_logs_volume_hub:/hub/logs:ro'
+      - './supervisor-hub.conf:/var/www/html/supervisor.conf'
+      - ./bash/hubScript.sh:/home/script/hubScript.sh
     networks:
       - my-services
     depends_on:
       - mysql
     ports:
       - 8003:80
+
 
   mysql:
     container_name: whmcs-mysql
@@ -41,9 +47,9 @@ services:
       - 3309:3306
 
 volumes:
-  management_logs_volume_hub:
-    external: true
   htdocs_whmcs-mysql:
+    external: true
+  management_logs_volume_hub:
     external: true
 networks:
   my-services:
