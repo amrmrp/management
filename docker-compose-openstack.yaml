@@ -4,7 +4,7 @@ services:
 
   openstack-mic:
     env_file:
-      - ./env/.env.openstack.local
+      - ./env/.env.openstsack.local
     container_name: openstack-mic
     image: openstack-microsys-iranserver-com-openstack-mic:latest
     environment:
@@ -22,8 +22,6 @@ services:
       - 8002:80
 
   openstack-mysql:
-    env_file:
-      - .env.openstack
     container_name: openstack-mysql
     image: docker.iranserver.com/mysql:8.0
     environment:
