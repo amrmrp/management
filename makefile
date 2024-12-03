@@ -18,3 +18,10 @@ hub:
 openstack:
 	@docker-compose -f docker-compose-openstack.yaml down
 	@docker-compose -f docker-compose-openstack.yaml up -d
+ 
+ 
+os:
+	@docker-compose -f docker-compose-openstack.yaml exec openstack-mic supervisorctl restart all
+
+hs:
+	@docker-compose -f docker-compose-hub.yaml exec whmcs supervisorctl restart all
