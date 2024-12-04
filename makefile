@@ -2,9 +2,11 @@
 SHELL := /bin/bash
 #.PHONY: openstack
 
-all: tools hub openstack
+all: hub openstack
+supervisor: openstaack-supervisor openstaack-supervisor
 
 up:
+	@docker-compose -f docker-compose.tools.up.yaml down
 	@docker-compose -f docker-compose.tools.up.yaml up -d
 
 tools:
@@ -18,10 +20,9 @@ hub:
 openstack:
 	@docker-compose -f docker-compose-openstack.yaml down
 	@docker-compose -f docker-compose-openstack.yaml up -d
- 
- 
-os:
+
+openstaack-supervisor:
 	@docker-compose -f docker-compose-openstack.yaml exec openstack-mic supervisorctl restart all
 
-hs:
+hub-supervisor:
 	@docker-compose -f docker-compose-hub.yaml exec whmcs supervisorctl restart all

@@ -23,7 +23,6 @@ services:
     ports:
       - 8003:80
 
-
   mysql:
     container_name: whmcs-mysql
     image: docker.iranserver.com/mysql:8.0
