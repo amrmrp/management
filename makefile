@@ -26,3 +26,8 @@ openstaack-supervisor:
 
 hub-supervisor:
 	@docker-compose -f docker-compose-hub.yaml exec whmcs supervisorctl restart all
+
+reset:
+	@docker-compose -f docker-compose.tools.yaml stop $(service)
+	@docker-compose -f docker-compose.tools.yaml start $(service)
+	@echo "Service restarted. Running additional commands..."
