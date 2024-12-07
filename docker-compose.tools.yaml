@@ -78,27 +78,8 @@ services:
     networks:
       - my-services
     command:
+      - -config.expand-env=true
       - -config.file=/etc/promtail/promtail-config.yaml
-
-
-  rabbitmq:
-    image: docker.iranserver.com/rabbitmq:3.8.19-management
-    container_name: rabbitmq
-    hostname: rabbitmq
-
-    networks:
-      - my-services
-    ports:
-      - 5672:5672
-      - 15672:15672
-      - 15692:15692
-    restart: unless-stopped
-    volumes:
-      - 'databaseanalysis_rabbitmq-log:/var/log/rabbitmq'
-      - 'databaseanalysis_rabbitmq-data:/var/lib/rabbitmq'
-    environment:
-      RABBITMQ_DEFAULT_USER: admin
-      RABBITMQ_DEFAULT_PASS: admin
 
   redis:
     container_name: redis
@@ -117,10 +98,6 @@ volumes:
     driver: local
   redis-data:
     driver: local
-  databaseanalysis_rabbitmq-data:
-    external: true
-  databaseanalysis_rabbitmq-log:
-    external: true
   logs_volume:
     driver: local
   logs_volume_hub:

@@ -16,51 +16,17 @@ scrape_configs:
       - targets:
           - localhost
         labels:
+          service: logs
           job: openstack
           app: laravel-app
           __path__: /openstack/logs/*
-
-  - job_name: "laravel-logs2"
-    static_configs:
-      - targets:
-          - localhost
-        labels:
-          job: system
-          app: system-app
-          __path__: /var/log/*
 
   - job_name: "whmcs-logs"
     static_configs:
       - targets:
           - localhost
         labels:
+          service: logs
           job: whmcs
           app: whmcs-app
           __path__: /hub/logs/*
-
-#  - job_name: "whmcs-logs"
-#    static_configs:
-#      - targets:
-#          - localhost
-#        labels:
-#          job: whmcs
-#          app: whmcs-app
-#          __path__: /hub/logs/*
-
-#  - job_name: flog_scrape
-#    docker_sd_configs:
-#      - host: unix:///var/run/docker.sock
-#        refresh_interval: 5s
-#        filters:
-#          - name: label
-#            values: ["logging=promtail"]
-#    relabel_configs:
-#      - source_labels: ['__meta_docker_container_name']
-#        regex: '/(.*)'
-#        target_label: 'container'
-#      - source_labels: ['__meta_docker_container_log_stream']
-#        target_label: 'logstream'
-#      - source_labels: ['__meta_docker_container_label_logging_jobname']
-#        target_label: 'job'
-
-

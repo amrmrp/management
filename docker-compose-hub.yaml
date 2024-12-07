@@ -12,10 +12,12 @@ services:
     restart: unless-stopped
     volumes:
       - '/home/amir/htdocs:/var/www/html'
-      - '/home/amir/htdocs/metrics/logs:/var/www/html/metrics/logs:rw'
-      - 'management_logs_volume_hub:/hub/logs:ro'
+   #   - '/home/amir/htdocs/metrics/logs:/var/www/html/metrics/logs:rw'
+      - 'management_logs_volume_hub:/var/www/html/metrics/logs'
+    #  - 'management_logs_volume_hub:/hub/logs'
       - './supervisor-hub.conf:/var/www/html/supervisor.conf'
       - ./bash/hubScript.sh:/home/script/hubScript.sh
+      - ./supervisor-hub.conf:/var/www/supervisor-hub.conf
     networks:
       - my-services
     depends_on:

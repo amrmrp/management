@@ -3,6 +3,9 @@ SHELL := /bin/bash
 #.PHONY: openstack
 
 all: hub openstack
+
+terminate: tools hub openstack 
+
 supervisor: openstaack-supervisor openstaack-supervisor
 
 up:
