@@ -4,7 +4,7 @@ SHELL := /bin/bash
 
 all: hub openstack
 
-terminate: tools hub openstack 
+terminate: tools hub openstack up
 
 supervisor: openstaack-supervisor openstaack-supervisor
 
