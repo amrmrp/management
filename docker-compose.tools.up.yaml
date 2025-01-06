@@ -25,50 +25,9 @@ services:
       - FB_BASEURL=/filebrowser
     restart: always
 
-  jaeger:
-    image: jaegertracing/all-in-one:1.6
-    container_name: jaeger
-    restart: unless-stopped
-    command:
-      --metrics-http-route=/metrics
-    ports:
-      - 5775:5775/udp
-      - 6831:6831/udp
-      - 6832:6832/udp
-      - 5778:5778
-      - 16686:16686
-      - 14268:14268
-      - 9411:9411
-      - 14269:14269
-    networks:
-      - my-services
-
-  rabbitmq:
-    image: docker.iranserver.com/rabbitmq:3.8.19-management
-    container_name: rabbitmq
-    hostname: rabbitmq
-
-    networks:
-      - my-services
-    ports:
-      - 5672:5672
-      - 15672:15672
-      - 15692:15692
-    restart: unless-stopped
-    volumes:
-      - 'databaseanalysis_rabbitmq-log:/var/log/rabbitmq'
-      - 'databaseanalysis_rabbitmq-data:/var/lib/rabbitmq'
-    environment:
-      RABBITMQ_DEFAULT_USER: admin
-      RABBITMQ_DEFAULT_PASS: admin
-
 volumes:
   portainer_data:
     driver: local
-  databaseanalysis_rabbitmq-data:
-    external: true
-  databaseanalysis_rabbitmq-log:
-    external: true
 networks:
   my-services:
     external: true

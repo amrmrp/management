@@ -1,109 +1,32 @@
 version: '3.8'
 
 services:
+  rabbitmq:
+    image: docker.iranserver.com/rabbitmq:3.8.19-management
+    container_name: rabbitmq
+    hostname: rabbitmq
 
-
-
-
-#  nginx-app:
-#    container_name: nginx-app
-#    image: nginx
-#    labels:
-#      logging: "promtail"
-#      logging_jobname: "containerlogs"
-#    ports:
-#      - 8080:80
-#    networks:
-#      - my-services
-
-
-
-  grafana:
-    image: grafana/grafana:latest
-    container_name: grafana
+    networks:
+      - my-services
+    ports:
+      - 5672:5672
+      - 15672:15672
+      - 15692:15692
+    restart: unless-stopped
     environment:
-      - GF_SECURITY_ADMIN_USER=admin
-      - GF_SECURITY_ADMIN_PASSWORD=admin
-    volumes:
-      - grafana_data:/var/lib/grafana
-      - ./grafana-plugins:/var/lib/grafana/plugins
-      - ./config/grafana-datasources.yml:/etc/grafana/provisioning/datasources/datasources.yaml
-    command: >
-      sh -c "grafana cli plugins install redis-app &&
-             grafana cli plugins install redis-explorer-app &&
-             grafana-server --homepath=/usr/share/grafana & 
-             sleep 5 && 
-             killall grafana-server && 
-             grafana-server --homepath=/usr/share/grafana"
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: admin
+
+  nodejs:
+    build: .
+    container_name: nodejs
+    hostname: nodejs
     ports:
-      - "3000:3000"
-    networks:
-      - my-services
-
-
-#  redisinsight:
-#    image: redis/redisinsight:latest
-#    container_name: redisinsight
-#    ports:
-#      - "5540:5540" # RedisInsight UI available on http://localhost:8001
-#    environment:
-#      - REDISINSIGHT_AUTH_ENABLED=false # Set to true to enable authentication
-#      - RI_APP_PORT=5540
-#    volumes:
-#      - redis-data:/db
-#    networks:
-#      - my-services
-
-
-  loki:
-    container_name: loki
-    image: grafana/loki:latest
-    ports:
-      - 3100:3100
-    command: -config.file=/etc/loki/local-config.yaml
-    networks:
-      - my-services
-
-
-
-  promtail:
-    image: grafana/promtail:latest
-    container_name: promtail
+      - "8080:8080"
     volumes:
-      - ./config/promtail-config.yml:/etc/promtail/promtail-config.yaml:ro
-      - /var/log:/var/log:ro
-      - logs_volume:/openstack/logs
-#      - ./../htdocs/metrics/logs:/hub/logs
-      - logs_volume_hub:/hub/logs
-    networks:
-      - my-services
-    command:
-      - -config.expand-env=true
-      - -config.file=/etc/promtail/promtail-config.yaml
+      - ./../view:/usr/src/app
+    command: ["npm", "start"]
 
-  redis:
-    container_name: redis
-    image: redis:7
-    restart: always
-    command: redis-server --save 60 1 --requirepass "123456"
-    volumes:
-      - redis-data:/data
-    networks:
-      - my-services
-
-volumes:
-  portainer_data:
-    driver: local
-  grafana_data:
-    driver: local
-  redis-data:
-    driver: local
-  logs_volume:
-    driver: local
-  logs_volume_hub:
-    driver: local
-  htdocs_whmcs-mysql:
-    external: true
 networks:
   my-services:
     external: true
