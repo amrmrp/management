@@ -2,12 +2,12 @@ version: "3.7"
 
 services:
   api:
-    image: git.greenweb.ir:5050/iranserver-sdk/api-gateway:develop
+    image: devopsfaith/krakend:latest
     container_name: api
     command: [ "run", "-d", "-c", "/etc/krakend/krakend.json" ]
     restart: unless-stopped
     env_file:
-      - ./env/.env.hub.local
+      - ./env/.env.api.local
     environment:
       FC_ENABLE: 1
       FC_SETTINGS: /etc/krakend/settings/${APP_ENV:-dev}
@@ -42,7 +42,7 @@ services:
       IS_PRICING_API_TOKEN: "${IS_PRICING_API_TOKEN}"
       APP_ENV: "${APP_ENV}"
     ports:
-      - "9091:9091"
+      - "9091:8080"
     networks:
       - my-services
 
