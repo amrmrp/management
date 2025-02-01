@@ -1,7 +1,5 @@
 version: '2.1'
 
-
-
 services:
   service:
     container_name: services
@@ -10,7 +8,7 @@ services:
     env_file: ./env/.env.service.local
     environment:
       DB_CONNECTION: mysql
-      SUPERVISOR_CONF_FILE: supervisor-develop.conf
+      SUPERVISOR_CONF_FILE: supervisor.conf
       FRAMEWORK: Laravel
       VIRTUAL_HOST: users.localhost
       VIRTUAL_PORT: 80
@@ -18,12 +16,10 @@ services:
     networks:
       - my-services
     volumes:
-      - './supervisor/supervisor-user.conf:/var/www/html/supervisor.conf'
+      - './supervisor/supervisor-service.conf:/var/www/html/supervisor.conf'
       - '/home/amir/services-microsys-iranserver-com:/var/www/html'
     ports:
       - 8005:80
-
-
 
 volumes:
   htdocs_whmcs-mysql:
