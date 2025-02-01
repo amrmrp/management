@@ -1,0 +1,51 @@
+version: "3.7"
+
+services:
+  api:
+    image: git.greenweb.ir:5050/iranserver-sdk/api-gateway:develop
+    container_name: api
+    command: [ "run", "-d", "-c", "/etc/krakend/krakend.json" ]
+    restart: unless-stopped
+    env_file:
+      - ./env/.env.hub.local
+    environment:
+      FC_ENABLE: 1
+      FC_SETTINGS: /etc/krakend/settings/${APP_ENV:-dev}
+      FC_PARTIALS: /etc/krakend/partials
+      FC_TEMPLATES: /etc/krakend/templates
+      APP_URL: ${APP_URL}
+      VIRTUAL_HOST: ${APP_URL}
+      LETSENCRYPT_HOST: ${APP_URL}
+      DOCKER_CERT_PATH: /etc/iranserver-ssl
+      LETSENCRYPT_STANDALONE_CERTS: ('gw')
+      LETSENCRYPT_gw_HOST: ('${APP_URL}')
+      
+      #FC_OUT: out.json
+      VIRTUAL_PORT: 8080
+      IS_API_TOKEN: "${IS_API_TOKEN}"
+      MULTI_TOKEN: "${MULTI_TOKEN}"
+      NOTICE_TOKEN: "${NOTICE_TOKEN}"
+      USER_TOKEN: "${USER_TOKEN}"
+      KEYCLOAK_TOKEN: "${KEYCLOAK_TOKEN}"
+      IS_SUPPORT_API_TOKEN: "${IS_SUPPORT_API_TOKEN}"
+      IS_SSL_TOKEN: "${IS_SSL_TOKEN}"
+      NOTIFICATION_TOKEN: "${NOTIFICATION_TOKEN}"
+      IS_SEC_API_ACCESS_TOKEN: "${IS_SEC_API_ACCESS_TOKEN}"
+      METRICS_ADDRESS: "${METRICS_ADDRESS}"
+      INFLUX_ADDRESS: "${INFLUX_ADDRESS}"
+      INFLUXDB_PASSWORD: "${INFLUXDB_PASSWORD}"
+      INFLUXDB_SECRET: "${INFLUXDB_SECRET}"
+      INFLUX_USERNAME: "${INFLUX_USERNAME}"
+      INFLUX_PASSWORD: "${INFLUX_PASSWORD}"
+      PROMETHEUS_PORT: "${PROMETHEUS_PORT}"
+      JAEGER_ADDRESS: "${JAEGER_ADDRESS}"
+      IS_PRICING_API_TOKEN: "${IS_PRICING_API_TOKEN}"
+      APP_ENV: "${APP_ENV}"
+    ports:
+      - "9091:9091"
+    networks:
+      - my-services
+
+networks:
+  my-services:
+    external: true

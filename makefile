@@ -28,6 +28,10 @@ service:
 	@docker-compose -f docker-compose-service.yaml down
 	@docker-compose -f docker-compose-service.yaml up -d
 
+api:
+	@docker-compose -f docker-compose-api.yml down
+	@docker-compose -f docker-compose-api.yml up --build --force-recreate
+
 #openstack:
 #	@docker-compose -f docker-compose-openstack.yaml down
 #	@docker-compose -f docker-compose-openstack.yaml up -d
