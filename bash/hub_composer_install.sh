@@ -1,5 +1,5 @@
 #!/bin/bash
-export COMPOSER_AUTH='{"http-basic":{"":{"username":"","password":""}}}'
+./auth.sh
 # Define the base directory where your projects are located
 BASE_DIR="/var/www/html"
 

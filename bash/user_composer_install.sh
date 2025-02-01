@@ -1,5 +1,5 @@
 #!/bin/bash
-export COMPOSER_AUTH='{"http-basic":{"":{"username":"","password":""}}}'
+./auth.sh
 
 #alias composer='/usr/bin/php7.4 /usr/local/bin/composer'
 

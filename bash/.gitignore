@@ -1,2 +1,3 @@
 hub_composer_install.sh
 user_composer_install.sh
+auth.sh
