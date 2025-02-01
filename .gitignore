@@ -1,2 +1,4 @@
 /env
 /.idea
+bash/hub_composer_install.sh
+bash/user_composer_install.sh
