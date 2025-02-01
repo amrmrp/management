@@ -1,0 +1,4 @@
+# local image
+FROM git.greenweb.ir:5050/greenweb-infra/base-dockerfiles/php:8.1 AS local
+
+COPY . /home/amir/users.microsys.iranserver.com

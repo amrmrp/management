@@ -2,9 +2,6 @@ version: '3.8'
 
 services:
 
-
-
-
 #  nginx-app:
 #    container_name: nginx-app
 #    image: nginx
@@ -15,8 +12,6 @@ services:
 #      - 8080:80
 #    networks:
 #      - my-services
-
-
 
   grafana:
     image: grafana/grafana:latest
@@ -63,8 +58,6 @@ services:
     command: -config.file=/etc/loki/local-config.yaml
     networks:
       - my-services
-
-
 
   promtail:
     image: grafana/promtail:latest

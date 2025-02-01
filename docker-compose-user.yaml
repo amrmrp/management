@@ -1,0 +1,39 @@
+version: '3.9'
+
+services:
+  users:
+    container_name: users
+    env_file: ./env/.env.user.local
+    build:
+      context: .
+      dockerfile: DockerfileUser
+      target: local
+      args:
+        GITLAB_TOKEN: glpat-iaQ9Tzr-zaZUsyjF-wQC
+    environment:
+      DB_CONNECTION: mysql
+      SUPERVISOR_CONF_FILE: supervisor-develop.conf
+      FRAMEWORK: Laravel
+      VIRTUAL_HOST: users.localhost
+      VIRTUAL_PORT: 80
+      CRONTAB: enable
+    volumes:
+      - './supervisor/supervisor-user.conf:/var/www/html/supervisor.conf'
+      - '/home/amir/users.microsys.iranserver.com:/var/www/html'
+    restart: always
+    networks:
+      - my-services
+    ports:
+      - 8002:80
+
+volumes:
+  htdocs_whmcs-mysql:
+    external: true
+  new_volume_name:
+    external: true
+  management_logs_volume_hub:
+    external: true
+
+networks:
+  my-services:
+    external: true

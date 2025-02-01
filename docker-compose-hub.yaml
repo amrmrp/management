@@ -11,19 +11,21 @@ services:
       - ./env/.env.hub.local
     restart: unless-stopped
     volumes:
-      - '/home/amir/htdocs:/var/www/html'
+      - '/home/amir/hub.iranserver.com:/var/www/html'
+      - './env/login.php:/var/www/html/login2.php'
    #   - '/home/amir/htdocs/metrics/logs:/var/www/html/metrics/logs:rw'
       - 'management_logs_volume_hub:/var/www/html/metrics/logs'
-    #  - 'management_logs_volume_hub:/hub/logs'
-      - './supervisor-hub.conf:/var/www/html/supervisor.conf'
+   #   - 'management_logs_volume_hub:/hub/logs'
+    #  - './supervisor/supervisor-hub.conf:/var/www/html/supervisor.conf'
       - ./bash/hubScript.sh:/home/script/hubScript.sh
-      - ./supervisor-hub.conf:/var/www/supervisor-hub.conf
+      - ./supervisor/supervisor-hub.conf:/var/www/html/supervisor-hub.conf
     networks:
       - my-services
     depends_on:
       - mysql
     ports:
-      - 8003:80
+      -   8003:80
+
 
   mysql:
     container_name: whmcs-mysql
@@ -49,6 +51,8 @@ services:
 
 volumes:
   htdocs_whmcs-mysql:
+    external: true
+  new_volume_name:
     external: true
   management_logs_volume_hub:
     external: true

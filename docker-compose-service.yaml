@@ -1,0 +1,38 @@
+version: '2.1'
+
+
+
+services:
+  service:
+    container_name: services
+    restart: unless-stopped
+    image: services-microsys-iranserver-com_services:latest
+    env_file: ./env/.env.service.local
+    environment:
+      DB_CONNECTION: mysql
+      SUPERVISOR_CONF_FILE: supervisor-develop.conf
+      FRAMEWORK: Laravel
+      VIRTUAL_HOST: users.localhost
+      VIRTUAL_PORT: 80
+      CRONTAB: enable
+    networks:
+      - my-services
+    volumes:
+      - './supervisor/supervisor-user.conf:/var/www/html/supervisor.conf'
+      - '/home/amir/services-microsys-iranserver-com:/var/www/html'
+    ports:
+      - 8005:80
+
+
+
+volumes:
+  htdocs_whmcs-mysql:
+    external: true
+  new_volume_name:
+    external: true
+  management_logs_volume_hub:
+    external: true
+
+networks:
+  my-services:
+    external: true
