@@ -30,6 +30,10 @@ service:
 
 api:
 	@docker-compose -f docker-compose-api.yml down
+	@docker-compose -f docker-compose-api.yml up --build --force-recreate -d
+
+api-log:
+	@docker-compose -f docker-compose-api.yml down
 	@docker-compose -f docker-compose-api.yml up --build --force-recreate
 
 #openstack:

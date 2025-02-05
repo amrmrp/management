@@ -8,9 +8,10 @@ services:
     command: [ "/bin/bash", "/home/script/hubScript.sh" ]
     container_name: whmcs-website
     env_file:
-      - ./env/.env.hub.local
+      - ./env/.env.hub.develop
     restart: unless-stopped
     volumes:
+ #     - ./php/custom.ini:/usr/local/etc/php/php.ini
       - '/home/amir/hub.iranserver.com:/var/www/html'
       - './env/login.php:/var/www/html/login2.php'
    #   - '/home/amir/htdocs/metrics/logs:/var/www/html/metrics/logs:rw'
