@@ -8,7 +8,7 @@ services:
     command: [ "/bin/bash", "/home/script/hubScript.sh" ]
     container_name: whmcs-website
     env_file:
-      - ./env/.env.hub.develop
+      - ./env/.env.hub.local
     restart: unless-stopped
     volumes:
  #     - ./php/custom.ini:/usr/local/etc/php/php.ini

@@ -1,0 +1,36 @@
+FROM git.greenweb.ir:5050/greenweb-infra/base-dockerfiles/php:8.1
+
+# نصب Xdebug
+RUN apt-get update && apt-get install -y php8.1-xdebug
+
+# پیکربندی Xdebug
+COPY ./php/xdebug-3.4.1.tgz /usr/lib/php/20200930
+
+RUN tar -xvzf /usr/lib/php/20200930/xdebug-3.4.1.tgz
+RUN echo "zend_extension=/usr/lib/php/20200930/xdebug.so" >> /etc/php/8.1/cli/conf.d/00-xdebug.ini
+RUN echo "zend_extension=/usr/lib/php/20200930/xdebug.so" >> /etc/php/8.1/apache2/conf.d/00-xdebug.ini
+RUN echo "zend_extension=/usr/lib/php/20200930/xdebug.so" >> /etc/php/8.1/fpm/conf.d/00-xdebug.ini
+
+# تنظیمات Xdebug برای CLI
+RUN echo "xdebug.mode=debug" >> /etc/php/8.1/cli/conf.d/01-xdebug.ini
+RUN echo "xdebug.start_with_request=yes" >> /etc/php/8.1/cli/conf.d/01-xdebug.ini
+RUN echo "xdebug.client_host=host.docker.internal" >> /etc/php/8.1/cli/conf.d/01-xdebug.ini
+RUN echo "xdebug.client_port=9003" >> /etc/php/8.1/cli/conf.d/01-xdebug.ini
+
+# تنظیمات Xdebug برای Apache
+RUN echo "xdebug.mode=debug" >> /etc/php/8.1/apache2/conf.d/02-xdebug.ini
+RUN echo "xdebug.start_with_request=yes" >> /etc/php/8.1/apache2/conf.d/02-xdebug.ini
+RUN echo "xdebug.client_host=host.docker.internal" >> /etc/php/8.1/apache2/conf.d/02-xdebug.ini
+RUN echo "xdebug.client_port=9003" >> /etc/php/8.1/apache2/conf.d/02-xdebug.ini
+RUN echo "xdebug.remote_cookie_expire_time=360000" >> /etc/php/8.1/apache2/conf.d/02-xdebug.ini
+RUN echo "max_execution_time=36000" >> /etc/php/8.1/apache2/conf.d/001-xdebug.ini
+RUN echo "xdebug.remote_timeout=36000" >> /etc/php/8.1/apache2/conf.d/001-xdebug.ini
+
+# تنظیمات Xdebug برای PHP-FPM
+RUN echo "xdebug.mode=debug" >> /etc/php/8.1/fpm/conf.d/03-xdebug.ini
+RUN echo "xdebug.start_with_request=yes" >> /etc/php/8.1/fpm/conf.d/03-xdebug.ini
+RUN echo "xdebug.client_host=host.docker.internal" >> /etc/php/8.1/fpm/conf.d/03-xdebug.ini
+RUN echo "xdebug.client_port=9003" >> /etc/php/8.1/fpm/conf.d/03-xdebug.ini
+RUN echo "xdebug.remote_cookie_expire_time=360000" >> /etc/php/8.1/fpm/conf.d/03-xdebug.ini
+RUN echo "request_terminate_timeout=36000" >> /etc/php/8.1/fpm/conf.d/001-xdebug.ini
+RUN echo "xdebug.remote_timeout=36000" >> /etc/php/8.1/fpm/conf.d/001-xdebug.ini

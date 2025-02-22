@@ -2,7 +2,7 @@ version: "3.7"
 
 services:
   api:
-    image: devopsfaith/krakend:latest
+    image: git.greenweb.ir:5050/iranserver-sdk/api-gateway:develop
     container_name: api
     command: [ "run", "-d", "-c", "/etc/krakend/krakend.json" ]
     restart: unless-stopped
@@ -22,15 +22,15 @@ services:
       
       #FC_OUT: out.json
       VIRTUAL_PORT: 8080
-      IS_API_TOKEN: "${IS_API_TOKEN}"
+      IS_API_TOKEN: "0R6Ba53tsPGp6gou"
       MULTI_TOKEN: "${MULTI_TOKEN}"
       NOTICE_TOKEN: "${NOTICE_TOKEN}"
-      USER_TOKEN: "${USER_TOKEN}"
+      USER_TOKEN: "123456"
       KEYCLOAK_TOKEN: "${KEYCLOAK_TOKEN}"
-      IS_SUPPORT_API_TOKEN: "${IS_SUPPORT_API_TOKEN}"
+      IS_SUPPORT_API_TOKEN: "tmGJYkWl!a3?0A'a"
       IS_SSL_TOKEN: "${IS_SSL_TOKEN}"
       NOTIFICATION_TOKEN: "${NOTIFICATION_TOKEN}"
-      IS_SEC_API_ACCESS_TOKEN: "${IS_SEC_API_ACCESS_TOKEN}"
+      IS_SEC_API_ACCESS_TOKEN: E5xkLudOzF9g62lJgcjh44uD8vohLcbI
       METRICS_ADDRESS: "${METRICS_ADDRESS}"
       INFLUX_ADDRESS: "${INFLUX_ADDRESS}"
       INFLUXDB_PASSWORD: "${INFLUXDB_PASSWORD}"
@@ -41,6 +41,8 @@ services:
       JAEGER_ADDRESS: "${JAEGER_ADDRESS}"
       IS_PRICING_API_TOKEN: "${IS_PRICING_API_TOKEN}"
       APP_ENV: "${APP_ENV}"
+    volumes:
+      - '/home/amir/api-gateway/configs:/etc/krakend'  
     ports:
       - "9091:8080"
     networks:

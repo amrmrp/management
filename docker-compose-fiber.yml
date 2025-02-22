@@ -1,0 +1,21 @@
+version: "3.7"
+
+services:
+  fiber:
+    build:
+      context: .
+      dockerfile: DockerfileFiber
+    container_name: fiber
+    restart: unless-stopped
+    environment:
+      USER_ID: 1000
+    volumes:
+      - '/home/amir/php:/var/www/html'  
+    ports:
+      - "3000:3000"
+    networks:
+      - my-services
+
+networks:
+  my-services:
+    external: true

@@ -36,6 +36,10 @@ api-log:
 	@docker-compose -f docker-compose-api.yml down
 	@docker-compose -f docker-compose-api.yml up --build --force-recreate
 
+fiber:
+	@docker-compose -f docker-compose-fiber.yml down
+	@docker-compose -f docker-compose-fiber.yml up 
+
 #openstack:
 #	@docker-compose -f docker-compose-openstack.yaml down
 #	@docker-compose -f docker-compose-openstack.yaml up -d
